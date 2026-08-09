@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rohit Das | Python Backend &amp; Automation Engineer</title>
+<meta name="description" content="Rohit Das — Python Backend Developer &amp; Automation Engineer. 2.5+ years building REST APIs, RPA pipelines, and ETL workflows with Python, Flask, Selenium and MySQL.">
+<meta property="og:title" content="Rohit Das | Python Backend & Automation Engineer">
+<meta property="og:description" content="Engineering Python systems that turn manual workflows into automated pipelines.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0d12;
+    --bg-raised: #10141c;
+    --bg-card: #12161f;
+    --line: rgba(231,233,238,0.08);
+    --line-strong: rgba(231,233,238,0.14);
+    --text: #e7e9ee;
+    --text-dim: #929aad;
+    --text-faint: #5b6377;
+    --indigo: #8b7cf6;
+    --indigo-dim: #6558c9;
+    --teal: #4fd1c5;
+    --amber: #f2b84b;
+    --err: #f2716a;
+    --radius: 14px;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --maxw: 1160px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *, *::before, *::after{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(139,124,246,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 15%, rgba(79,209,197,0.08), transparent 60%);
+    background-repeat:no-repeat;
+  }
+
+  ::selection{ background: var(--indigo); color:#fff; }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  .wrap{ max-width: var(--maxw); margin:0 auto; padding:0 32px; }
+  section{ padding:120px 0; position:relative; }
+  @media (max-width:768px){ section{ padding:80px 0; } .wrap{ padding:0 20px; } }
+
+  h1,h2,h3,h4{ font-family: var(--font-display); font-weight:600; letter-spacing:-0.01em; }
+
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color: var(--teal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px; height:7px; border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 3px rgba(79,209,197,0.18);
+  }
+
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(28px,3.4vw,40px); margin-bottom:14px; }
+  .section-head p{ color:var(--text-dim); font-size:16.5px; }
+
+  .grad-text{
+    background: linear-gradient(100deg, #ffffff 15%, var(--indigo) 55%, var(--teal) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:20px 0;
+    transition:background 0.35s ease, border-color 0.35s ease, padding 0.35s ease, backdrop-filter 0.35s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(10,13,18,0.78);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-bottom-color:var(--line);
+    padding:14px 0;
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; }
+  .logo{ font-family:var(--font-mono); font-weight:600; font-size:16px; display:flex; align-items:center; gap:8px; }
+  .logo .dot{ color:var(--teal); }
+  .nav-links{ display:flex; gap:34px; list-style:none; }
+  .nav-links a{
+    font-size:14.5px; color:var(--text-dim); font-weight:500; position:relative; padding:4px 0;
+    transition:color 0.2s ease;
+  }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px; background:var(--teal);
+    transition:width 0.25s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{ color:var(--text); }
+  .nav-links a.active::after{ width:100%; }
+
+  .nav-cta{
+    display:flex; align-items:center; gap:16px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:13.5px; font-weight:500;
+    padding:11px 20px; border-radius:9px; border:1px solid var(--line-strong);
+    transition:transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg, var(--indigo), var(--indigo-dim));
+    border-color:transparent; color:#fff;
+    box-shadow:0 8px 24px -8px rgba(139,124,246,0.55);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 28px -8px rgba(139,124,246,0.7); }
+  .btn-ghost{ color:var(--text); background:rgba(255,255,255,0.02); }
+  .btn-ghost:hover{ border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
+
+  .hamburger{ display:none; flex-direction:column; gap:5px; background:none; border:none; padding:6px; }
+  .hamburger span{ width:22px; height:2px; background:var(--text); transition:0.3s; }
+  .hamburger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2){ opacity:0; }
+  .hamburger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; top:0; right:0; height:100vh; width:78%; max-width:320px;
+    background:var(--bg-raised); border-left:1px solid var(--line);
+    z-index:99; padding:100px 32px 32px;
+    transform:translateX(100%); transition:transform 0.35s ease;
+    display:flex; flex-direction:column; gap:26px;
+  }
+  .mobile-menu.open{ transform:translateX(0); }
+  .mobile-menu a{ font-size:17px; font-weight:500; color:var(--text-dim); }
+  .mobile-menu a:hover{ color:var(--text); }
+  .menu-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:98;
+    opacity:0; pointer-events:none; transition:opacity 0.3s ease;
+  }
+  .menu-overlay.open{ opacity:1; pointer-events:auto; }
+
+  @media (max-width:900px){
+    .nav-links{ display:none; }
+    .nav-cta .btn-ghost{ display:none; }
+    .hamburger{ display:flex; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh; display:flex; align-items:center; padding-top:120px;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center;
+  }
+  @media (max-width:940px){ .hero-grid{ grid-template-columns:1fr; } .hero{ min-height:auto; padding-bottom:60px; } }
+
+  .hero-kicker{
+    font-family:var(--font-mono); font-size:13.5px; color:var(--text-dim);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .hero-kicker .wave{ font-size:16px; }
+
+  .hero h1{
+    font-size:clamp(38px, 5.4vw, 62px); line-height:1.06; margin-bottom:20px;
+  }
+  .hero .role-line{
+    font-family:var(--font-mono); font-size:clamp(14px,1.6vw,17px); color:var(--teal);
+    margin-bottom:22px; min-height:26px;
+  }
+  .hero .role-line .cursor{ display:inline-block; width:8px; height:1em; background:var(--teal); margin-left:2px; vertical-align:-2px; animation:blink 1s step-end infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .hero p.tagline{ font-size:17px; color:var(--text-dim); max-width:520px; margin-bottom:34px; }
+
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:38px; }
+
+  .hero-social{ display:flex; gap:18px; }
+  .social-btn{
+    width:42px; height:42px; border-radius:10px; border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center; color:var(--text-dim);
+    transition:0.2s ease;
+  }
+  .social-btn:hover{ color:var(--teal); border-color:var(--teal); transform:translateY(-2px); }
+  .social-btn svg{ width:18px; height:18px; }
+
+  /* terminal visual */
+  .term-wrap{ position:relative; }
+  .terminal{
+    background:#0d1117; border:1px solid var(--line-strong); border-radius:12px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02);
+    overflow:hidden;
+    font-family:var(--font-mono); font-size:13.4px;
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px; padding:12px 16px;
+    background:#10141b; border-bottom:1px solid var(--line);
+  }
+  .term-bar .dot{ width:10px; height:10px; border-radius:50%; }
+  .term-bar .dot:nth-child(1){ background:#f2716a; }
+  .term-bar .dot:nth-child(2){ background:#f2b84b; }
+  .term-bar .dot:nth-child(3){ background:#4fd1c5; }
+  .term-title{ margin-left:auto; margin-right:auto; color:var(--text-faint); font-size:12px; }
+  .term-body{ padding:22px 20px 26px; min-height:300px; color:#c9d1d9; }
+  .term-body .pre{ color:var(--text-faint); }
+  .term-body .cmd{ color:#e7e9ee; }
+  .term-body .ok{ color:var(--teal); }
+  .term-body .amber{ color:var(--amber); }
+  .term-body .indigo{ color:var(--indigo); }
+  .term-line{ opacity:0; white-space:pre-wrap; word-break:break-word; margin-bottom:4px; }
+  .term-line.show{ opacity:1; }
+  .bar-track{ background:rgba(255,255,255,0.06); border-radius:4px; height:6px; width:100%; margin:6px 0 12px; overflow:hidden; }
+  .bar-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--indigo), var(--teal)); border-radius:4px; transition:width 1.1s ease; }
+
+  .floaty{
+    position:absolute; font-family:var(--font-mono); font-size:12px;
+    padding:8px 12px; border-radius:8px; background:var(--bg-card);
+    border:1px solid var(--line-strong); color:var(--text-dim);
+    box-shadow:0 12px 24px -10px rgba(0,0,0,0.5);
+    animation:float 5s ease-in-out infinite;
+  }
+  .floaty.f1{ top:-18px; right:-14px; animation-delay:0s; }
+  .floaty.f2{ bottom:-16px; left:-18px; animation-delay:1.5s; }
+  .floaty b{ color:var(--amber); }
+  @keyframes float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
+  @media (max-width:940px){ .floaty{ display:none; } }
+
+  /* ---------- stats strip ---------- */
+  .stats-strip{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:40px 0;
+  }
+  .stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; text-align:center; }
+  @media (max-width:700px){ .stats-grid{ grid-template-columns:repeat(2,1fr); gap:32px; } }
+  .stat h3{ font-size:clamp(28px,3.4vw,38px); color:var(--text); margin-bottom:6px; }
+  .stat h3 span{ color:var(--teal); }
+  .stat p{ font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-faint); }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:start; }
+  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; gap:40px; } }
+  .about-text p{ color:var(--text-dim); margin-bottom:18px; font-size:15.8px; }
+  .about-text p strong{ color:var(--text); font-weight:600; }
+
+  .about-points{ display:flex; flex-direction:column; gap:16px; }
+  .point{
+    display:flex; gap:14px; padding:18px; border:1px solid var(--line); border-radius:12px;
+    background:var(--bg-card);
+    transition:border-color 0.2s ease, transform 0.2s ease;
+  }
+  .point:hover{ border-color:var(--line-strong); transform:translateX(4px); }
+  .point .num{ font-family:var(--font-mono); color:var(--indigo); font-size:13px; padding-top:2px; }
+  .point h4{ font-size:15.5px; margin-bottom:4px; }
+  .point p{ color:var(--text-dim); font-size:14px; }
+
+  /* ---------- skills ---------- */
+  .skills-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media (max-width:860px){ .skills-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .skills-grid{ grid-template-columns:1fr; } }
+  .skill-card{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px; transition:border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .skill-card:hover{ border-color:var(--indigo); transform:translateY(-4px); box-shadow:0 16px 32px -18px rgba(139,124,246,0.4); }
+  .skill-card .icon{
+    width:38px; height:38px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+    margin-bottom:16px; background:rgba(139,124,246,0.12); color:var(--indigo);
+  }
+  .skill-card .icon svg{ width:19px; height:19px; }
+  .skill-card h4{ font-size:16px; margin-bottom:12px; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-family:var(--font-mono); font-size:12px; padding:5px 10px; border-radius:6px;
+    background:rgba(255,255,255,0.04); color:var(--text-dim); border:1px solid var(--line);
+  }
+
+  /* ---------- experience ---------- */
+  .timeline{ position:relative; padding-left:32px; }
+  .timeline::before{
+    content:''; position:absolute; left:6px; top:6px; bottom:6px; width:1px;
+    background:linear-gradient(var(--indigo), var(--teal));
+    opacity:0.4;
+  }
+  .tl-item{ position:relative; padding-bottom:44px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:''; position:absolute; left:-32px; top:4px; width:13px; height:13px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--teal);
+  }
+  .tl-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 16px; margin-bottom:6px; }
+  .tl-head h3{ font-size:19px; }
+  .tl-company{ color:var(--indigo); font-weight:600; font-size:15px; }
+  .tl-meta{ font-family:var(--font-mono); font-size:12px; color:var(--text-faint); margin-bottom:14px; }
+  .tl-bullets{ list-style:none; display:flex; flex-direction:column; gap:9px; margin-bottom:14px; }
+  .tl-bullets li{ display:flex; gap:10px; color:var(--text-dim); font-size:14.6px; }
+  .tl-bullets li::before{ content:'+'; font-family:var(--font-mono); color:var(--teal); font-weight:600; }
+  .tl-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+
+  /* ---------- projects ---------- */
+  .proj-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  @media (max-width:940px){ .proj-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:640px){ .proj-grid{ grid-template-columns:1fr; } }
+  .proj-card{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px; display:flex; flex-direction:column; height:100%;
+    transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .proj-card:hover{ transform:translateY(-6px); border-color:var(--teal); box-shadow:0 20px 40px -20px rgba(79,209,197,0.3); }
+  .proj-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; }
+  .proj-icon{ width:36px; height:36px; border-radius:8px; background:rgba(79,209,197,0.12); color:var(--teal); display:flex; align-items:center; justify-content:center; }
+  .proj-icon svg{ width:17px; height:17px; }
+  .proj-badge{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); border:1px solid var(--line); padding:4px 8px; border-radius:6px; }
+  .proj-card h3{ font-size:17.5px; margin-bottom:10px; }
+  .proj-card p{ color:var(--text-dim); font-size:14.3px; margin-bottom:16px; flex-grow:1; }
+  .proj-metrics{ display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+  .proj-metrics span{ font-family:var(--font-mono); font-size:12.5px; color:var(--amber); }
+  .proj-metrics span::before{ content:'▸ '; color:var(--text-faint); }
+  .proj-link-note{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint); border-top:1px solid var(--line); padding-top:14px; margin-top:auto; }
+
+  /* ---------- education ---------- */
+  .edu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  @media (max-width:760px){ .edu-grid{ grid-template-columns:1fr; } }
+  .edu-card{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius); padding:26px;
+  }
+  .edu-card h3{ font-size:17px; margin-bottom:6px; }
+  .edu-card .edu-meta{ font-family:var(--font-mono); font-size:12.5px; color:var(--text-faint); margin-bottom:10px; }
+  .edu-card p{ color:var(--text-dim); font-size:14px; }
+  .cert-list{ display:flex; flex-direction:column; gap:12px; margin-top:6px; }
+  .cert-row{ display:flex; align-items:center; gap:12px; padding:12px 14px; background:rgba(255,255,255,0.02); border:1px solid var(--line); border-radius:9px; }
+  .cert-row .icon{ width:30px; height:30px; border-radius:7px; background:rgba(242,184,75,0.14); color:var(--amber); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .cert-row .icon svg{ width:15px; height:15px; }
+  .cert-row div h4{ font-size:14px; margin-bottom:2px; }
+  .cert-row div p{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint); }
+
+  /* ---------- contact ---------- */
+  .contact-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; }
+  @media (max-width:860px){ .contact-grid{ grid-template-columns:1fr; gap:40px; } }
+  .contact-info p{ color:var(--text-dim); margin-bottom:28px; font-size:15.5px; max-width:420px; }
+  .contact-rows{ display:flex; flex-direction:column; gap:14px; }
+  .contact-row{
+    display:flex; align-items:center; gap:14px; padding:14px 16px; border:1px solid var(--line);
+    border-radius:10px; background:var(--bg-card); font-size:14.5px; transition:0.2s ease;
+  }
+  .contact-row:hover{ border-color:var(--indigo); transform:translateX(4px); }
+  .contact-row .icon{ width:34px; height:34px; border-radius:8px; background:rgba(139,124,246,0.12); color:var(--indigo); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .contact-row .icon svg{ width:16px; height:16px; }
+  .contact-row span.label{ color:var(--text-faint); font-family:var(--font-mono); font-size:11px; display:block; }
+
+  .form-card{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius); padding:32px;
+  }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:var(--font-mono); font-size:12px; color:var(--text-dim); margin-bottom:8px; }
+  .field input, .field textarea{
+    width:100%; background:rgba(255,255,255,0.03); border:1px solid var(--line-strong); border-radius:9px;
+    padding:12px 14px; color:var(--text); font-family:var(--font-body); font-size:14.5px;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--teal); background:rgba(255,255,255,0.05); }
+  .field textarea{ resize:vertical; min-height:110px; }
+  .send-btn{ width:100%; justify-content:center; padding:14px; font-size:14px; }
+  .form-note{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint); margin-top:12px; text-align:center; }
+
+  /* ---------- footer ---------- */
+  footer{ border-top:1px solid var(--line); padding:36px 0; }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-row p{ color:var(--text-faint); font-size:13px; font-family:var(--font-mono); }
+
+  /* back to top */
+  #backtotop{
+    position:fixed; bottom:26px; right:26px; width:46px; height:46px; border-radius:50%;
+    background:var(--bg-card); border:1px solid var(--line-strong); color:var(--text);
+    display:flex; align-items:center; justify-content:center; z-index:90;
+    opacity:0; pointer-events:none; transform:translateY(10px);
+    transition:opacity 0.3s ease, transform 0.3s ease, border-color 0.2s ease;
+  }
+  #backtotop.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  #backtotop:hover{ border-color:var(--teal); color:var(--teal); }
+  #backtotop svg{ width:18px; height:18px; }
+
+  :focus-visible{ outline:2px solid var(--teal); outline-offset:3px; }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="#home" class="logo">rohit<span class="dot">.</span>das<span class="dot">()</span></a>
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#education" class="nav-link">Education</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-ghost">Say Hello</a>
+        <a href="#projects" class="btn btn-primary">View Work</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="menu-overlay" id="overlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" class="nav-link">Home</a>
+  <a href="#about" class="nav-link">About</a>
+  <a href="#skills" class="nav-link">Skills</a>
+  <a href="#experience" class="nav-link">Experience</a>
+  <a href="#projects" class="nav-link">Projects</a>
+  <a href="#education" class="nav-link">Education</a>
+  <a href="#contact" class="nav-link">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="hero-kicker"><span class="wave">👋</span> Hello, I'm</p>
+        <h1>Rohit Das —<br><span class="grad-text">I automate the work</span><br>machines shouldn't need humans for.</h1>
+        <p class="role-line" id="roleLine">Python Backend Developer<span class="cursor"></span></p>
+        <p class="tagline">Engineering Python systems that turn manual workflows into automated pipelines — REST APIs, RPA bots, and ETL processes that ship to production and hold up there.</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">View My Work</a>
+          <a href="#contact" class="btn btn-ghost">Contact Me</a>
+        </div>
+        <div class="hero-social">
+          <a href="https://www.linkedin.com/in/rohitdas98/" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          </a>
+          <a href="https://github.com/rohitdas98" target="_blank" rel="noopener" class="social-btn" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.22-3.37-1.22-.45-1.18-1.11-1.5-1.11-1.5-.9-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.58 2.34 1.12 2.91.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.15-4.56-5.11 0-1.13.39-2.05 1.03-2.78-.1-.26-.45-1.32.1-2.75 0 0 .84-.28 2.75 1.06a9.3 9.3 0 0 1 5 0c1.9-1.34 2.74-1.06 2.74-1.06.56 1.43.21 2.49.1 2.75.65.73 1.03 1.65 1.03 2.78 0 3.97-2.35 4.85-4.58 5.1.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.81 0 .28.18.61.69.5A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+          </a>
+          <a href="https://www.credly.com/users/badges.rohit-das" target="_blank" rel="noopener" class="social-btn" aria-label="Credly badges">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="term-wrap reveal">
+        <div class="floaty f1">3,500+ <b>invoices</b> automated</div>
+        <div class="floaty f2">80+ <b>REST APIs</b> shipped</div>
+        <div class="terminal">
+          <div class="term-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="term-title">automate.py — zsh</span>
+          </div>
+          <div class="term-body" id="termBody">
+            <div class="term-line"><span class="pre">$</span> <span class="cmd">python run_pipeline.py --source erp --target dynamics365</span></div>
+            <div class="term-line">Connecting to source records...</div>
+            <div class="term-line"><span class="ok">✓</span> Loaded 3,542 invoices (Amazon, Flipkart)</div>
+            <div class="term-line">Validating &amp; transforming with pandas...</div>
+            <div class="term-line bar-line"><div class="bar-track"><div class="bar-fill" data-fill="100"></div></div></div>
+            <div class="term-line"><span class="ok">✓</span> Posted to Dynamics 365 BC</div>
+            <div class="term-line"><span class="amber">⏱</span>  avg time: 10min → <span class="ok">3min</span> / invoice</div>
+            <div class="term-line">&nbsp;</div>
+            <div class="term-line"><span class="pre">$</span> <span class="cmd">flask routes --count</span></div>
+            <div class="term-line"><span class="indigo">80+</span> REST endpoints registered across 3 services</div>
+            <div class="term-line"><span class="ok">✓</span> All health checks passing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat reveal"><h3><span>2.5</span>+</h3><p>Years Experience</p></div>
+      <div class="stat reveal"><h3><span>80</span>+</h3><p>REST APIs Built</p></div>
+      <div class="stat reveal"><h3><span>10K</span>+</h3><p>Records Automated</p></div>
+      <div class="stat reveal"><h3>AWS</h3><p>Certified Cloud Practitioner</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="eyebrow">About</p>
+        <h2>From manual chaos<br>to automated systems.</h2>
+        <div class="about-text">
+          <p><strong>Rohit Das</strong> is a Python Backend Developer &amp; Automation Engineer based in Kolkata, India, with 2.5+ years building production backend systems and automation pipelines at Automatrix Innovation Pvt Ltd.</p>
+          <p>The work spans three layers: <strong>backend</strong> — designing and shipping Flask REST APIs on MySQL; <strong>automation</strong> — replacing manual, repetitive business processes with Selenium-driven RPA bots; and <strong>data</strong> — building Pandas-based ETL pipelines that clean, validate, and move large datasets reliably.</p>
+          <p>AWS Certified Cloud Practitioner, comfortable in Agile/SDLC environments, and currently exploring FastAPI, async Python, and applied AI to extend that automation mindset further.</p>
+        </div>
+      </div>
+      <div class="about-points reveal">
+        <div class="point">
+          <span class="num">01</span>
+          <div><h4>Backend &amp; APIs</h4><p>Designed and deployed 80+ REST APIs using Flask and MySQL across HR, data-management, and reporting systems.</p></div>
+        </div>
+        <div class="point">
+          <span class="num">02</span>
+          <div><h4>RPA &amp; Automation</h4><p>Built end-to-end Selenium automation that converts manual workflows into reliable, unattended processes with retry and error handling.</p></div>
+        </div>
+        <div class="point">
+          <span class="num">03</span>
+          <div><h4>ETL &amp; Data Processing</h4><p>Built Pandas pipelines processing 10,000+ records — extraction, cleaning, validation and transformation — cutting manual reconciliation by 65%.</p></div>
+        </div>
+        <div class="point">
+          <span class="num">04</span>
+          <div><h4>Problem-first Approach</h4><p>Works closely with business stakeholders in Agile teams to turn operational pain points into scalable, maintainable solutions.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Skills</p>
+      <h2>Tools of the trade</h2>
+      <p>The stack behind every API, bot and pipeline listed above.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 17l6-6-6-6M12 19h8"/></svg></div>
+        <h4>Languages &amp; Backend</h4>
+        <div class="tag-row">
+          <span class="tag">Python 3.x</span><span class="tag">SQL</span><span class="tag">Flask</span><span class="tag">REST APIs</span><span class="tag">OOP</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a13 13 0 0 0 0 18M12 3a13 13 0 0 1 0 18M3 12h18"/></svg></div>
+        <h4>Automation &amp; RPA</h4>
+        <div class="tag-row">
+          <span class="tag">Selenium</span><span class="tag">Web Scraping</span><span class="tag">Robot Framework</span><span class="tag">Process Automation</span><span class="tag">Dynamics 365 BC</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+        <h4>ETL &amp; Data</h4>
+        <div class="tag-row">
+          <span class="tag">Pandas</span><span class="tag">ETL Pipelines</span><span class="tag">Data Extraction</span><span class="tag">Data Validation</span><span class="tag">Reconciliation</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></div>
+        <h4>Databases</h4>
+        <div class="tag-row">
+          <span class="tag">MySQL</span><span class="tag">PostgreSQL</span><span class="tag">Relational Design</span><span class="tag">Query Optimization</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg></div>
+        <h4>Cloud &amp; Tools</h4>
+        <div class="tag-row">
+          <span class="tag">AWS (Certified)</span><span class="tag">Git / GitHub</span><span class="tag">Postman</span><span class="tag">JIRA</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h4>Ways of Working</h4>
+        <div class="tag-row">
+          <span class="tag">Agile / SDLC</span><span class="tag">Problem Solving</span><span class="tag">Cross-functional Comms</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Experience</p>
+      <h2>Where the work happened</h2>
+      <p>Two years and counting of shipping backend systems and automation to production.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <h3>Software Engineer</h3>
+          <span class="tl-company">Automatrix Innovation Pvt Ltd</span>
+        </div>
+        <p class="tl-meta">Nov 2023 — Present · Kolkata, India</p>
+        <ul class="tl-bullets">
+          <li>Engineered end-to-end RPA automation solutions using Python and Selenium, converting manual business workflows into scalable, unattended processes.</li>
+          <li>Designed and deployed 80+ REST APIs using Flask and MySQL for automation workflows, improving process efficiency by 60%.</li>
+          <li>Built Excel-based ETL pipelines with Pandas to extract, clean, transform and validate 10,000+ records, cutting manual reconciliation effort by 65%.</li>
+          <li>Implemented exception handling, logging and retry mechanisms to keep automation stable and reliable in production.</li>
+          <li>Performed API testing with Postman, validating request/response data and edge cases, while collaborating with cross-functional teams in an Agile environment.</li>
+        </ul>
+        <div class="tl-tags">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Selenium</span><span class="tag">MySQL</span><span class="tag">Pandas</span><span class="tag">Postman</span>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <h3>ASE Intern Trainee</h3>
+          <span class="tl-company">Accenture</span>
+        </div>
+        <p class="tl-meta">Jun 2023 — Aug 2023 · Bengaluru, India</p>
+        <ul class="tl-bullets">
+          <li>Applied the Software Development Life Cycle (SDLC) across structured phases, from requirements gathering through deployment.</li>
+          <li>Explored AWS cloud services hands-on — configuring EC2 instances, implementing S3 storage, and setting up event-driven SNS notifications.</li>
+        </ul>
+        <div class="tl-tags">
+          <span class="tag">SDLC</span><span class="tag">AWS EC2</span><span class="tag">AWS S3</span><span class="tag">AWS SNS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Projects</p>
+      <h2>Systems built &amp; shipped</h2>
+      <p>Production work from Automatrix Innovation, spanning backend, automation and ETL.</p>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <span class="proj-badge">Internal system</span>
+        </div>
+        <h3>Human Resource Management System</h3>
+        <p>Backend platform for employee management, training and reporting workflows built for internal HR operations.</p>
+        <div class="proj-metrics">
+          <span>25+ Flask &amp; MySQL REST APIs</span>
+          <span>10,000+ records processed via Pandas</span>
+          <span>Automated for 500+ employees — 75% less effort</span>
+        </div>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">MySQL</span><span class="tag">Pandas</span><span class="tag">Postman</span>
+        </div>
+        <div class="proj-link-note">🔒 Internal project — link to be shared</div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></div>
+          <span class="proj-badge">Internal system</span>
+        </div>
+        <h3>Data Management Portal</h3>
+        <p>Backend portal handling large-scale data validation and reporting for operational teams.</p>
+        <div class="proj-metrics">
+          <span>65+ REST APIs for validation &amp; reporting</span>
+          <span>10,000+ records processed</span>
+          <span>Operational errors reduced by 50%</span>
+        </div>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">MySQL</span><span class="tag">Postman</span>
+        </div>
+        <div class="proj-link-note">🔒 Internal project — link to be shared</div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a13 13 0 0 0 0 18M12 3a13 13 0 0 1 0 18M3 12h18"/></svg></div>
+          <span class="proj-badge">RPA / ERP</span>
+        </div>
+        <h3>Invoice Data Posting Automation</h3>
+        <p>End-to-end automation posting e-commerce invoices from Amazon and Flipkart into Microsoft Dynamics 365 Business Central.</p>
+        <div class="proj-metrics">
+          <span>3,500+ invoices automated</span>
+          <span>Errors reduced by 45%</span>
+          <span>10min → 3min per invoice (70% faster)</span>
+        </div>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">Selenium</span><span class="tag">MySQL</span><span class="tag">Dynamics 365 BC</span>
+        </div>
+        <div class="proj-link-note">🔒 Internal project — link to be shared</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Education &amp; Certifications</p>
+      <h2>Foundations</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <h3>B.Tech, Mechanical Engineering</h3>
+        <p class="edu-meta">Maulana Abul Kalam Azad University of Technology (MAKAUT) · 2019 — 2022</p>
+        <p>Graduated with a GPA of 8.80. Later transitioned into software development and automation through hands-on training and industry experience.</p>
+      </div>
+      <div class="edu-card reveal">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:6px;">
+          <h3 style="margin-bottom:0;">Certifications</h3>
+          <a href="https://www.credly.com/users/badges.rohit-das" target="_blank" rel="noopener" class="tag" style="color:var(--amber); border-color:var(--amber);">View badges on Credly →</a>
+        </div>
+        <div class="cert-list" style="margin-top:16px;">
+          <a href="https://www.credly.com/users/badges.rohit-das" target="_blank" rel="noopener" class="cert-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg></div>
+            <div><h4>AWS Certified Cloud Practitioner</h4><p>Credential ID: CGWG5G9CQBREQ8WJ · Jan 2023</p></div>
+          </a>
+          <div class="cert-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg></div>
+            <div><h4>AWS Educate — Getting Started with Networking</h4><p>Amazon Web Services</p></div>
+          </div>
+          <div class="cert-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg></div>
+            <div><h4>AWS Educate — Getting Started with Storage</h4><p>Amazon Web Services</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="eyebrow">Contact</p>
+        <h2>Let's build something<br>that runs itself.</h2>
+        <p>Open to Python Backend Developer, Automation Engineer and ETL Developer roles in Kolkata, Bangalore, Pune, Noida, Gurugram, or remote. Reach out directly or use the form.</p>
+        <div class="contact-rows">
+          <a href="mailto:work.rohitdas98@gmail.com" class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg></div>
+            <div><span class="label">Email</span>work.rohitdas98@gmail.com</div>
+          </a>
+          <a href="tel:+917003438722" class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div><span class="label">Phone</span>+91 7003438722</div>
+          </a>
+          <a href="https://www.linkedin.com/in/rohitdas98/" target="_blank" rel="noopener" class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></div>
+            <div><span class="label">LinkedIn</span>linkedin.com/in/rohitdas98</div>
+          </a>
+          <a href="https://github.com/rohitdas98" target="_blank" rel="noopener" class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.22-3.37-1.22-.45-1.18-1.11-1.5-1.11-1.5-.9-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.58 2.34 1.12 2.91.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.15-4.56-5.11 0-1.13.39-2.05 1.03-2.78-.1-.26-.45-1.32.1-2.75 0 0 .84-.28 2.75 1.06a9.3 9.3 0 0 1 5 0c1.9-1.34 2.74-1.06 2.74-1.06.56 1.43.21 2.49.1 2.75.65.73 1.03 1.65 1.03 2.78 0 3.97-2.35 4.85-4.58 5.1.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.81 0 .28.18.61.69.5A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg></div>
+            <div><span class="label">GitHub</span>github.com/rohitdas98</div>
+          </a>
+          <a href="https://www.credly.com/users/badges.rohit-das" target="_blank" rel="noopener" class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg></div>
+            <div><span class="label">Credly</span>credly.com/users/badges.rohit-das</div>
+          </a>
+          <div class="contact-row">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><span class="label">Location</span>Kolkata, West Bengal, India</div>
+          </div>
+        </div>
+      </div>
+
+      <form class="form-card" id="contactForm">
+        <div class="field">
+          <label for="cname">Name</label>
+          <input type="text" id="cname" name="name" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="cemail">Email</label>
+          <input type="email" id="cemail" name="email" placeholder="you@company.com" required>
+        </div>
+        <div class="field">
+          <label for="cmsg">Message</label>
+          <textarea id="cmsg" name="message" placeholder="Tell me about the role or project..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary send-btn">Send Message</button>
+        <p class="form-note">Opens your email client — nothing is stored or sent from this page.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© <span id="year"></span> Rohit Das. Built with HTML, CSS &amp; JavaScript.</p>
+      <p>Kolkata, India</p>
+    </div>
+  </div>
+</footer>
+
+<button id="backtotop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* header scroll state */
+const header = document.getElementById('siteHeader');
+const backtotop = document.getElementById('backtotop');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 20);
+  backtotop.classList.toggle('show', window.scrollY > 500);
+}, { passive:true });
+
+/* mobile menu */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('overlay');
+function closeMenu(){
+  hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded','false');
+  mobileMenu.classList.remove('open');
+  overlay.classList.remove('open');
+}
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', isOpen);
+  overlay.classList.toggle('open', isOpen);
+});
+overlay.addEventListener('click', closeMenu);
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+/* back to top */
+backtotop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+/* active nav link on scroll */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      const id = entry.target.getAttribute('id');
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-45% 0px -50% 0px' });
+sections.forEach(s => navObserver.observe(s));
+
+/* scroll reveal */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      entry.target.classList.add('in');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.12 });
+revealEls.forEach(el => revealObserver.observe(el));
+
+/* rotating role line */
+const roles = [
+  'Python Backend Developer',
+  'Python Automation Engineer',
+  'ETL Developer',
+  'RPA Developer'
+];
+const roleLine = document.getElementById('roleLine');
+let roleIndex = 0;
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!prefersReduced){
+  setInterval(() => {
+    roleIndex = (roleIndex + 1) % roles.length;
+    roleLine.innerHTML = roles[roleIndex] + '<span class="cursor"></span>';
+  }, 2600);
+}
+
+/* terminal type-in animation, triggered when hero is visible */
+const termLines = document.querySelectorAll('#termBody .term-line');
+let termPlayed = false;
+function playTerminal(){
+  if (termPlayed || prefersReduced) {
+    termLines.forEach(l => { l.classList.add('show'); const f=l.querySelector('.bar-fill'); if(f) f.style.width='100%'; });
+    termPlayed = true;
+    return;
+  }
+  termPlayed = true;
+  termLines.forEach((line, i) => {
+    setTimeout(() => {
+      line.classList.add('show');
+      const fill = line.querySelector('.bar-fill');
+      if (fill) fill.style.width = (fill.dataset.fill || '100') + '%';
+    }, i * 260);
+  });
+}
+const termObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) playTerminal(); });
+}, { threshold:0.3 });
+termObserver.observe(document.querySelector('.terminal'));
+
+/* animated stat counters */
+const stats = document.querySelectorAll('.stat h3 span');
+const statTargets = [2.5, 80, 10];
+let statsPlayed = false;
+function playStats(){
+  if (statsPlayed) return;
+  statsPlayed = true;
+  stats.forEach((el, i) => {
+    if (prefersReduced){ el.textContent = statTargets[i] % 1 === 0 ? statTargets[i] : statTargets[i].toFixed(1); return; }
+    const target = statTargets[i];
+    const isDecimal = target % 1 !== 0;
+    let current = 0;
+    const step = target / 40;
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target){ current = target; clearInterval(interval); }
+      el.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
+    }, 30);
+  });
+}
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) playStats(); });
+}, { threshold:0.5 });
+const statsStrip = document.querySelector('.stats-strip');
+if (statsStrip) statsObserver.observe(statsStrip);
+
+/* contact form -> mailto */
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('cname').value;
+  const email = document.getElementById('cemail').value;
+  const msg = document.getElementById('cmsg').value;
+  const subject = encodeURIComponent('Portfolio inquiry from ' + name);
+  const body = encodeURIComponent(msg + '\n\n— ' + name + ' (' + email + ')');
+  window.location.href = `mailto:work.rohitdas98@gmail.com?subject=${subject}&body=${body}`;
+});
+</script>
+
+</body>
+</html>
